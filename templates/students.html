@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Danh sách sinh viên{% endblock %}
+
+{% block content %}
+<h1>Danh sách sinh viên</h1>
+{% if students %}
+<table>
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>MSSV</th>
+            <th>Họ tên</th>
+            <th>Điểm TB</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in students %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ s.mssv }}</td>
+            <td>{{ s.name }}</td>
+            <td class="{{ 'low' if s.gpa < 5 else '' }}">{{ "%.1f"|format(s.gpa) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<p>Tổng: {{ students|length }} sinh viên</p>
+{% else %}
+<p>Chưa có sinh viên nào. Mở <a href="{{ url_for('add_sample') }}">/them-mau</a> để thêm dữ liệu mẫu.</p>
+{% endif %}
+{% endblock %}
